@@ -74,6 +74,9 @@ flutter:
     - family: ThinkingOfBetty
       fonts:
         - asset: assets/fonts/ThinkingOfBetty.ttf
+    - family: GameOfThrones
+      fonts:
+        - asset: assets/fonts/GameOfThrones.ttf
 
   #
   # For details regarding fonts from package dependencies,
