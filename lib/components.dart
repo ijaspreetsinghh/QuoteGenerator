@@ -59,7 +59,10 @@ class CTALinksEndDrawer extends StatelessWidget {
 
 class MainContentViewBuilder extends StatelessWidget {
   final Color color;
-  const MainContentViewBuilder({@required this.color});
+  final String author;
+  final String content;
+  const MainContentViewBuilder(
+      {@required this.color, @required this.author, @required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,7 @@ class MainContentViewBuilder extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: kHPadding * 2),
             child: Text(
-              'Spread love everywhere you go. Let no one ever come to you without leaving happier.',
+              content,
               textAlign: TextAlign.center,
               maxLines: 7,
               style: kQuoteDomaineDisplayTextStyle.copyWith(color: kWhiteColor),
@@ -82,7 +85,7 @@ class MainContentViewBuilder extends StatelessWidget {
             height: kVPadding * 4,
           ),
           Text(
-            '- Mother Teresa'.toUpperCase(),
+            '- $author'.toUpperCase(),
             style: kAuthorTextStyle.copyWith(color: kWhiteColor),
           ),
           SizedBox(

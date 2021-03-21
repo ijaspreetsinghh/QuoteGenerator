@@ -16,10 +16,16 @@ class MyApp extends StatelessWidget {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light),
       child: MultiProvider(
-        providers: [ChangeNotifierProvider<Tags>(create: (context) => Tags())],
+        providers: [
+          ChangeNotifierProvider<Tags>(create: (context) => Tags()),
+          ChangeNotifierProvider<Quotes>(create: (context) => Quotes()),
+          ChangeNotifierProvider<Result>(create: (context) => Result())
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: App(),
+          home: App(
+            selectedCategory: 'random',
+          ),
         ),
       ),
     );
