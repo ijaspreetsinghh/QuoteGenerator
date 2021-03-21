@@ -29,7 +29,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
   http: any
-  share: ^2.0.1
   social_share: ^2.1.1
 
 dev_dependencies:

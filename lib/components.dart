@@ -72,6 +72,7 @@ class MainContentViewBuilder extends StatefulWidget {
 
 class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
   void _modalBottomSheetMenu() {
+    String _sharableContent = '"${widget.content}"\nBy - ${widget.author}';
     showModalBottomSheet(
         context: context,
         builder: (builder) {
@@ -82,32 +83,69 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: kHPadding * 1.5, vertical: kVPadding * 2),
-                    child: Text(
-                      'Share this on:',
-                      style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
-                    ),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: kHPadding * 1.5, vertical: kVPadding * 2),
+                  //   child: Text(
+                  //     'Share this on:',
+                  //     style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: kVPadding * 3,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.ac_unit,
-                            size: 50,
-                            color: Colors.red,
-                          ),
-                          onPressed: () => SocialShare.shareWhatsapp(
-                              '"${widget.content}"\nBy - ${widget.author}'),
-                        )
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.copy_rounded,
+                              size: 30,
+                            ),
+                            onPressed: () =>
+                                SocialShare.copyToClipboard(_sharableContent)),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.messenger_outline_outlined,
+                              size: 30,
+                            ),
+                            onPressed: () =>
+                                SocialShare.shareSms(_sharableContent)),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.share_rounded,
+                              size: 30,
+                            ),
+                            onPressed: () =>
+                                SocialShare.shareOptions(_sharableContent)),
+                      )
+                    ],
                   ),
-                  Spacer(),
+                  SizedBox(
+                    height: kVPadding * 5,
+                  ),
                   Text(
                     'The more we share, the more we have',
                     style: kAvertaTextStyle.copyWith(
