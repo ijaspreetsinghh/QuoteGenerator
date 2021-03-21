@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:quote_generator/data.dart';
 
 import 'app.dart';
 
@@ -13,9 +15,12 @@ class MyApp extends StatelessWidget {
       value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: App(),
+      child: MultiProvider(
+        providers: [ChangeNotifierProvider<Tags>(create: (context) => Tags())],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: App(),
+        ),
       ),
     );
   }

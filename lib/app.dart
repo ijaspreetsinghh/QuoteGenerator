@@ -15,6 +15,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _appScaffoldKey,
       drawer: LeftDrawer(),
       endDrawer: EndDrawer(),
