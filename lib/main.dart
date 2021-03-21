@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light),
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark),
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider<Tags>(create: (context) => Tags()),

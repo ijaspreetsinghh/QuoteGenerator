@@ -21,9 +21,20 @@ class EndDrawer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.red,
-                  radius: 40,
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/logo.png'),
+                          fit: BoxFit.cover,
+                          repeat: ImageRepeat.noRepeat,
+                          alignment: AlignmentDirectional.center,
+                          scale: 1.0),
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: kPrimaryColor,
+                      )),
                 ),
                 SizedBox(
                   height: kVPadding * 2,

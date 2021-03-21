@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -57,12 +58,78 @@ class CTALinksEndDrawer extends StatelessWidget {
   }
 }
 
-class MainContentViewBuilder extends StatelessWidget {
+class MainContentViewBuilder extends StatefulWidget {
   final Color color;
   final String author;
   final String content;
   const MainContentViewBuilder(
       {@required this.color, @required this.author, @required this.content});
+
+  @override
+  _MainContentViewBuilderState createState() => _MainContentViewBuilderState();
+}
+
+class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
+  void _modalBottomSheetMenu() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return Container(
+              height: 300,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: kHPadding * 1.5, vertical: kVPadding * 2),
+                    child: Text(
+                      'Share this on:',
+                      style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < 8; i++)
+                          Icon(
+                            Icons.ac_unit,
+                            size: 50,
+                            color: Colors.red,
+                          )
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'The more we share, the more we have',
+                    style: kAvertaTextStyle.copyWith(
+                      color: kSecondaryColor,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: kVPadding * 1.5,
+                  ),
+                  Text(
+                    '- Lionard Nimoy',
+                    style: kAvertaTextStyle.copyWith(
+                      color: kGrayColor,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: kVPadding * 6,
+                  )
+                ],
+              ));
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,18 +142,19 @@ class MainContentViewBuilder extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: kHPadding * 2),
             child: Text(
-              content,
+              widget.content,
               textAlign: TextAlign.center,
               maxLines: 7,
-              style: kQuoteDomaineDisplayTextStyle.copyWith(color: kWhiteColor),
+              style:
+                  kQuoteDomaineDisplayTextStyle.copyWith(color: kPrimaryColor),
             ),
           ),
           SizedBox(
             height: kVPadding * 4,
           ),
           Text(
-            '- $author'.toUpperCase(),
-            style: kAuthorTextStyle.copyWith(color: kWhiteColor),
+            '- ${widget.author}'.toUpperCase(),
+            style: kAuthorTextStyle.copyWith(color: kPrimaryColor),
           ),
           SizedBox(
             height: kHPadding * 5,
@@ -94,13 +162,13 @@ class MainContentViewBuilder extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                border:
-                    Border.all(color: kWhiteColor.withOpacity(.4), width: 1.5)),
+                border: Border.all(
+                    color: kPrimaryColor.withOpacity(.4), width: 1.5)),
             child: IconButton(
-              color: kWhiteColor,
+              color: kPrimaryColor,
               iconSize: 35.0,
               icon: Icon(Icons.more_horiz),
-              onPressed: () => print('share'),
+              onPressed: () => _modalBottomSheetMenu(),
             ),
           ),
           Spacer(
@@ -108,7 +176,7 @@ class MainContentViewBuilder extends StatelessWidget {
           )
         ],
       ),
-      color: color,
+      color: widget.color,
     );
   }
 }

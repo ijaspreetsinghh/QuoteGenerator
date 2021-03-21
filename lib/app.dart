@@ -34,21 +34,10 @@ class _AppState extends State<App> {
       itemCount: result.length,
       itemBuilder: (context, position) {
         return MainContentViewBuilder(
-            color: Colors.black,
+            color: kWhiteColor,
             author: result[position].author,
             content: result[position].content);
       },
-      // onPageChanged: (value) {
-      //   int pageNumber = _pageController.initialPage + value;
-      //   if (pageNumber == result.length) {
-      //     _appScaffoldMessengerKey.currentState.showSnackBar(
-      //       SnackBar(
-      //         content: Text('hi'),
-      //         backgroundColor: Colors.red,
-      //       ),
-      //     );
-      //   }
-      // },
     );
   }
 
@@ -68,7 +57,6 @@ class _AppState extends State<App> {
     return Consumer<Quotes>(
       builder: (context, q, child) {
         return Scaffold(
-          backgroundColor: kPrimaryColor,
           resizeToAvoidBottomInset: false,
           key: _appScaffoldKey,
           drawer: LeftDrawer(
@@ -111,27 +99,30 @@ class _AppState extends State<App> {
               Positioned(
                 top: 50,
                 left: 25,
-                right: 25,
+                right: 15,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      child: Icon(
-                        Icons.menu,
-                        color: kWhiteColor,
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/menu.png',
+                        ),
+                        height: 20,
                       ),
-                      onTap: () {
-                        _appScaffoldKey.currentState.openDrawer();
-                      },
+                      onTap: () => _appScaffoldKey.currentState.openDrawer(),
                     ),
                     Text(
                       capitalize(widget.selectedCategory) ?? 'Random',
-                      style: kAvertaTextStyle.copyWith(color: kWhiteColor),
+                      style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
                     ),
                     GestureDetector(
                       child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: kWhiteColor,
+                        radius: 20,
+                        backgroundImage: AssetImage(
+                          'assets/images/logo.png',
+                        ),
+                        backgroundColor: Colors.transparent,
                       ),
                       onTap: () => _appScaffoldKey.currentState.openEndDrawer(),
                     ),
