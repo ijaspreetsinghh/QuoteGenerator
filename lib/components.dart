@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:social_share/social_share.dart';
 import 'constants.dart';
 
 class EndDrawerCTABuilder extends StatelessWidget {
@@ -94,12 +95,15 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        for (int i = 0; i < 8; i++)
-                          Icon(
+                        IconButton(
+                          icon: Icon(
                             Icons.ac_unit,
                             size: 50,
                             color: Colors.red,
-                          )
+                          ),
+                          onPressed: () => SocialShare.shareWhatsapp(
+                              '"${widget.content}"\nBy - ${widget.author}'),
+                        )
                       ],
                     ),
                   ),
