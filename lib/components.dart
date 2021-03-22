@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart';
 import 'constants.dart';
 import 'dart:math';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class EndDrawerCTABuilder extends StatelessWidget {
   final String title;
@@ -72,6 +73,27 @@ class MainContentViewBuilder extends StatefulWidget {
 }
 
 class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-4325421502488315/3699201503',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: AdListener(),
+  );
+  final AdSize adSize = AdSize(width: 300, height: 100);
+  final AdListener listener = AdListener(
+    // Called when an ad is successfully received.
+    onAdLoaded: (Ad ad) => print('Ad loaded.'),
+    // Called when an ad request failed.
+    onAdFailedToLoad: (Ad ad, LoadAdError error) {
+      print('Ad failed to load: $error');
+    },
+    // Called when an ad opens an overlay that covers the screen.
+    onAdOpened: (Ad ad) => print('Ad opened.'),
+    // Called when an ad removes an overlay that covers the screen.
+    onAdClosed: (Ad ad) => print('Ad closed.'),
+    // Called when an ad is in the process of leaving the application.
+    onApplicationExit: (Ad ad) => print('Left application.'),
+  );
   void _modalBottomSheetMenu() {
     String _sharableContent = '"${widget.content}"\nBy - ${widget.author}';
     showModalBottomSheet(
@@ -131,6 +153,12 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                       )
                     ],
                   ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: AdWidget(ad: myBanner),
+                    width: myBanner.size.width.toDouble(),
+                    height: myBanner.size.height.toDouble(),
+                  ),
                   SizedBox(
                     height: kVPadding * 5,
                   ),
@@ -159,6 +187,12 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                 ],
               ));
         });
+  }
+
+  @override
+  void initState() {
+    myBanner.load();
+    super.initState();
   }
 
   @override
