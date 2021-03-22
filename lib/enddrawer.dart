@@ -40,7 +40,7 @@ class EndDrawer extends StatelessWidget {
                   height: kVPadding * 2,
                 ),
                 Text(
-                  'Jonathan Jordan',
+                  'Quote Generator',
                   style: kAvertaTextStyle.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

@@ -6,7 +6,7 @@
 
 
     <application
-        android:label="quote_generator"
+        android:label="Quotes"
         android:icon="@mipmap/ic_launcher">
         <provider
             android:name="androidx.core.content.FileProvider"

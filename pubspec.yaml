@@ -30,6 +30,8 @@ dependencies:
   provider: ^5.0.0
   http: any
   social_share: ^2.1.1
+  firebase_core: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:

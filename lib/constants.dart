@@ -5,14 +5,22 @@ const kAccentColor = Color(0xff333333);
 const kSecondaryColor = Color(0xff666666);
 const kGrayColor = Color(0xff9c9e9f);
 const kWhiteColor = Colors.white;
-const kAverta = 'Averta';
-const kAharoni = 'Aharoni';
-const kBlackOut = 'BlackOut';
-const kDomaineDisplay = 'DomaineDisplay';
-const kThinkingOfBetty = 'ThinkingOfBetty';
-const kGameOfThrones = 'GameOfThrones';
+const String kAverta = 'Averta';
+const String kAharoni = 'Aharoni';
+const String kBlackOut = 'BlackOut';
+const String kDomaineDisplay = 'DomaineDisplay';
+const String kThinkingOfBetty = 'ThinkingOfBetty';
+const String kGameOfThrones = 'GameOfThrones';
 const kHPadding = 16.0;
 const kVPadding = 10.0;
+const kListOfFontFamily = [
+  kGameOfThrones,
+  kAverta,
+  kAharoni,
+  kThinkingOfBetty,
+  kBlackOut,
+  kDomaineDisplay
+];
 const kAvertaTextStyle = TextStyle(
   letterSpacing: 1.2,
   fontSize: 18.0,

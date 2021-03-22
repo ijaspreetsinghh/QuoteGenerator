@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart';
 import 'constants.dart';
+import 'dart:math';
 
 class EndDrawerCTABuilder extends StatelessWidget {
   final String title;
@@ -110,22 +111,9 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                               Icons.copy_rounded,
                               size: 30,
                             ),
-                            onPressed: () =>
-                                SocialShare.copyToClipboard(_sharableContent)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(
-                                color: kPrimaryColor.withOpacity(.4),
-                                width: 2)),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.messenger_outline_outlined,
-                              size: 30,
-                            ),
-                            onPressed: () =>
-                                SocialShare.shareSms(_sharableContent)),
+                            onPressed: () {
+                              SocialShare.copyToClipboard(_sharableContent);
+                            }),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -186,9 +174,10 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
             child: Text(
               widget.content,
               textAlign: TextAlign.center,
-              maxLines: 7,
-              style:
-                  kQuoteDomaineDisplayTextStyle.copyWith(color: kPrimaryColor),
+              style: kQuoteDomaineDisplayTextStyle.copyWith(
+                  color: kPrimaryColor,
+                  fontFamily: kListOfFontFamily[Random().nextInt(5)],
+                  fontSize: widget.content.length >= 130 ? 22 : 28),
             ),
           ),
           SizedBox(

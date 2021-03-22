@@ -19,6 +19,7 @@ class _AppState extends State<App> {
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   PageController _pageController = PageController();
   GlobalKey<ScaffoldState> _appScaffoldKey = GlobalKey();
+
   @override
   void initState() {
     getQuotes(widget.selectedCategory);
@@ -28,17 +29,32 @@ class _AppState extends State<App> {
   }
 
   Widget quoteBuilder(List<Result> result) {
-    return PageView.builder(
-      controller: _pageController,
-      scrollDirection: Axis.vertical,
-      itemCount: result.length,
-      itemBuilder: (context, position) {
-        return MainContentViewBuilder(
-            color: kWhiteColor,
-            author: result[position].author,
-            content: result[position].content);
-      },
-    );
+    return result.length == 0
+        ? Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'No Quotes Found!!',
+                  style: kAvertaTextStyle.copyWith(
+                    color: kGrayColor,
+                    fontSize: 16.0,
+                  ),
+                )
+              ],
+            ),
+          )
+        : PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.vertical,
+            itemCount: result.length,
+            itemBuilder: (context, position) {
+              return MainContentViewBuilder(
+                  color: kWhiteColor,
+                  author: result[position].author,
+                  content: result[position].content);
+            },
+          );
   }
 
   Future<List<Result>> getQuotes(String tag) async {
