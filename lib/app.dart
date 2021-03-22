@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_generator/data.dart';
-
 import 'components.dart';
 import 'constants.dart';
 import 'drawer.dart';

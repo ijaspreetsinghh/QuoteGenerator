@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quote_generator/data.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app.dart';
+import 'constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +28,80 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: App(
-            selectedCategory: 'random',
-          ),
+          home: FlutterApp(),
         ),
       ),
+    );
+  }
+}
+
+class FlutterApp extends StatefulWidget {
+  @override
+  _FlutterAppState createState() => _FlutterAppState();
+}
+
+class _FlutterAppState extends State<FlutterApp> {
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_error) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Error',
+              style: kAvertaTextStyle.copyWith(
+                color: kGrayColor,
+                fontSize: 16.0,
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(
+              backgroundColor: kWhiteColor,
+              valueColor: AlwaysStoppedAnimation<Color>(kWhiteColor),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return App(
+      selectedCategory: 'random',
     );
   }
 }
