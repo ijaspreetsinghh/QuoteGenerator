@@ -73,13 +73,19 @@ class MainContentViewBuilder extends StatefulWidget {
 }
 
 class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
-  final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-4325421502488315/3699201503',
-    size: AdSize.banner,
+  final BannerAd smallBanner = BannerAd(
+    adUnitId: BannerAd.testAdUnitId, // 'ca-app-pub-4325421502488315/3699201503'
+    size: AdSize(width: 300, height: 100),
     request: AdRequest(),
     listener: AdListener(),
   );
-  final AdSize adSize = AdSize(width: 300, height: 100);
+  final BannerAd bigBanner = BannerAd(
+    adUnitId: BannerAd.testAdUnitId, // 'ca-app-pub-4325421502488315/3699201503'
+    size: AdSize(width: 300, height: 500),
+    request: AdRequest(),
+    listener: AdListener(),
+  );
+
   final AdListener listener = AdListener(
     // Called when an ad is successfully received.
     onAdLoaded: (Ad ad) => print('Ad loaded.'),
@@ -94,119 +100,114 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
     // Called when an ad is in the process of leaving the application.
     onApplicationExit: (Ad ad) => print('Left application.'),
   );
-  final InterstitialAd intAd = InterstitialAd(
-      adUnitId: InterstitialAd
-          .testAdUnitId, //'ca-app-pub-4325421502488315/2498349214'
-      listener: AdListener(),
-      request: AdRequest());
+
   void _modalBottomSheetMenu() {
     String _sharableContent = '"${widget.content}"\nBy - ${widget.author}';
     showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return Random().nextInt(6) == 4
-              ? intAd
-              : Container(
-                  height: 350,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+          return Container(
+              height: 350,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: kHPadding * 1.5, vertical: kVPadding * 2),
+                  //   child: Text(
+                  //     'Share this on:',
+                  //     style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: kVPadding * 2,
+                  // ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: kVPadding * 2),
+                    alignment: Alignment.center,
+                    child: AdWidget(ad: smallBanner),
+                    width: smallBanner.size.width.toDouble(),
+                    height: smallBanner.size.height.toDouble(),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(
-                      //       horizontal: kHPadding * 1.5, vertical: kVPadding * 2),
-                      //   child: Text(
-                      //     'Share this on:',
-                      //     style: kAvertaTextStyle.copyWith(color: kPrimaryColor),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: kVPadding * 2,
-                      // ),
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: kVPadding * 2),
-                        alignment: Alignment.center,
-                        child: AdWidget(ad: myBanner),
-                        width: myBanner.size.width.toDouble(),
-                        height: myBanner.size.height.toDouble(),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.copy_rounded,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              SocialShare.copyToClipboard(_sharableContent);
+                            }),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                    color: kPrimaryColor.withOpacity(.4),
-                                    width: 2)),
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.copy_rounded,
-                                  size: 30,
-                                ),
-                                onPressed: () {
-                                  SocialShare.copyToClipboard(_sharableContent);
-                                }),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                    color: kPrimaryColor.withOpacity(.4),
-                                    width: 2)),
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.share_rounded,
-                                  size: 30,
-                                ),
-                                onPressed: () =>
-                                    SocialShare.shareOptions(_sharableContent)),
-                          )
-                        ],
-                      ),
-                      // Container(
-                      //   margin: EdgeInsets.symmetric(vertical: kVPadding),
-                      //   alignment: Alignment.center,
-                      //   child: AdWidget(ad: myBanner),
-                      //   width: myBanner.size.width.toDouble(),
-                      //   height: myBanner.size.height.toDouble(),
-                      // ),
-                      SizedBox(
-                        height: kVPadding * 5,
-                      ),
-                      Text(
-                        'The more we share, the more we have',
-                        style: kAvertaTextStyle.copyWith(
-                          color: kSecondaryColor,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: kVPadding * 1.5,
-                      ),
-                      Text(
-                        '- Lionard Nimoy',
-                        style: kAvertaTextStyle.copyWith(
-                          color: kGrayColor,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: kVPadding * 6,
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.share_rounded,
+                              size: 30,
+                            ),
+                            onPressed: () =>
+                                SocialShare.shareOptions(_sharableContent)),
                       )
                     ],
-                  ));
+                  ),
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(vertical: kVPadding),
+                  //   alignment: Alignment.center,
+                  //   child: AdWidget(ad: myBanner),
+                  //   width: myBanner.size.width.toDouble(),
+                  //   height: myBanner.size.height.toDouble(),
+                  // ),
+                  SizedBox(
+                    height: kVPadding * 5,
+                  ),
+                  Text(
+                    'The more we share, the more we have',
+                    style: kAvertaTextStyle.copyWith(
+                      color: kSecondaryColor,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: kVPadding * 1.5,
+                  ),
+                  Text(
+                    '- Lionard Nimoy',
+                    style: kAvertaTextStyle.copyWith(
+                      color: kGrayColor,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: kVPadding * 6,
+                  )
+                ],
+              ));
         });
   }
 
   @override
   void initState() {
-    myBanner.load();
+    smallBanner.load();
+
     super.initState();
   }
 
@@ -248,7 +249,9 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
               color: kPrimaryColor,
               iconSize: 35.0,
               icon: Icon(Icons.more_horiz),
-              onPressed: () => _modalBottomSheetMenu(),
+              onPressed: () {
+                // : _modalBottomSheetMenu();
+              },
             ),
           ),
           Spacer(
