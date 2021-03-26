@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_share/social_share.dart';
 import 'constants.dart';
 import 'dart:math';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class EndDrawerCTABuilder extends StatelessWidget {
   final String title;
@@ -65,6 +65,7 @@ class MainContentViewBuilder extends StatefulWidget {
   final Color color;
   final String author;
   final String content;
+
   const MainContentViewBuilder(
       {@required this.color, @required this.author, @required this.content});
 
@@ -73,33 +74,7 @@ class MainContentViewBuilder extends StatefulWidget {
 }
 
 class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
-  final BannerAd smallBanner = BannerAd(
-    adUnitId: BannerAd.testAdUnitId, // 'ca-app-pub-4325421502488315/3699201503'
-    size: AdSize(width: 300, height: 100),
-    request: AdRequest(),
-    listener: AdListener(),
-  );
-  final BannerAd bigBanner = BannerAd(
-    adUnitId: BannerAd.testAdUnitId, // 'ca-app-pub-4325421502488315/3699201503'
-    size: AdSize(width: 300, height: 500),
-    request: AdRequest(),
-    listener: AdListener(),
-  );
-
-  final AdListener listener = AdListener(
-    // Called when an ad is successfully received.
-    onAdLoaded: (Ad ad) => print('Ad loaded.'),
-    // Called when an ad request failed.
-    onAdFailedToLoad: (Ad ad, LoadAdError error) {
-      print('Ad failed to load: $error');
-    },
-    // Called when an ad opens an overlay that covers the screen.
-    onAdOpened: (Ad ad) => print('Ad opened.'),
-    // Called when an ad removes an overlay that covers the screen.
-    onAdClosed: (Ad ad) => print('Ad closed.'),
-    // Called when an ad is in the process of leaving the application.
-    onApplicationExit: (Ad ad) => print('Left application.'),
-  );
+  final flutterTts = FlutterTts();
 
   void _modalBottomSheetMenu() {
     String _sharableContent = '"${widget.content}"\nBy - ${widget.author}';
@@ -107,7 +82,7 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
         context: context,
         builder: (builder) {
           return Container(
-              height: 350,
+              height: 300,
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -126,13 +101,7 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                   // SizedBox(
                   //   height: kVPadding * 2,
                   // ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: kVPadding * 2),
-                    alignment: Alignment.center,
-                    child: AdWidget(ad: smallBanner),
-                    width: smallBanner.size.width.toDouble(),
-                    height: smallBanner.size.height.toDouble(),
-                  ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -159,6 +128,22 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                                 width: 2)),
                         child: IconButton(
                             icon: Icon(
+                              Icons.record_voice_over_rounded,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              flutterTts.setSpeechRate(1.25);
+                              flutterTts.speak(_sharableContent);
+                            }),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                                color: kPrimaryColor.withOpacity(.4),
+                                width: 2)),
+                        child: IconButton(
+                            icon: Icon(
                               Icons.share_rounded,
                               size: 30,
                             ),
@@ -175,7 +160,7 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                   //   height: myBanner.size.height.toDouble(),
                   // ),
                   SizedBox(
-                    height: kVPadding * 5,
+                    height: kVPadding * 4,
                   ),
                   Text(
                     'The more we share, the more we have',
@@ -197,18 +182,11 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: kVPadding * 6,
+                    height: kVPadding * 4,
                   )
                 ],
               ));
         });
-  }
-
-  @override
-  void initState() {
-    smallBanner.load();
-
-    super.initState();
   }
 
   @override
@@ -250,7 +228,7 @@ class _MainContentViewBuilderState extends State<MainContentViewBuilder> {
               iconSize: 35.0,
               icon: Icon(Icons.more_horiz),
               onPressed: () {
-                // : _modalBottomSheetMenu();
+                _modalBottomSheetMenu();
               },
             ),
           ),

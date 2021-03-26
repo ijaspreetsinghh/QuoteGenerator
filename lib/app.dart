@@ -6,7 +6,6 @@ import 'constants.dart';
 import 'drawer.dart';
 import 'enddrawer.dart';
 import 'package:http/http.dart' as http;
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class App extends StatefulWidget {
   final selectedCategory;
